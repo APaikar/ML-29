@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Smartphone Price Predictor</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .prediction-box {
+            border: 2px solid #4CAF50;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 30px;
+            background-color: white;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #333;
+        }
+        input[type="number"] {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>Smartphone Price Predictor</h1>
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <div class="form-group">
+            <label for="brand">Brand (1=Apple, 2=Samsung, etc.):</label>
+            <input type="number" id="brand" name="brand" min="1" required>
+        </div>
+
+        <div class="form-group">
+            <label for="memory">Internal Memory (GB):</label>
+            <input type="number" id="memory" name="memory" min="32" required>
+        </div>
+
+        <div class="form-group">
+            <label for="refresh">Refresh Rate (Hz):</label>
+            <input type="number" id="refresh" name="refresh" min="60" required>
+        </div>
+
+        <div class="form-group">
+            <label for="cameras">Number of Cameras:</label>
+            <input type="number" id="cameras" name="cameras" min="1" required>
+        </div>
+
+        <button type="submit">Predict Price</button>
+    </form>
+
+    {% if prediction %}
+    <div class="prediction-box">
+        <h2>Prediction Result</h2>
+        <p>Estimated Price: <strong>Rs.{{ prediction|floatformat:2 }}</strong></p>
+    </div>
+    {% endif %}
+</body>
+</html>
